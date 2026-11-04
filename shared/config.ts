@@ -1,0 +1,26 @@
+export const RESTAURANT = {
+  name: "Jamaa Fast Food",
+  legalName: "Jamaa Fast Food Limited",
+  tagline: "Fresh, fast and full of flavour — Dar es Salaam's favourite kitchen.",
+  phone: "+255 712 000 100",
+  phoneHref: "+255712000100",
+  whatsapp: "+255 712 000 100",
+  email: "orders@jamaafastfood.co.tz",
+  address: "Samora Machel Avenue, City Centre, Dar es Salaam, Tanzania",
+  shortAddress: "Samora Machel Ave, Dar es Salaam",
+  coords: { lat: -6.7924, lng: 39.2083 },
+  hours: [
+    { days: "Monday – Friday", time: "07:00 – 23:00" },
+    { days: "Saturday", time: "07:00 – 00:00" },
+    { days: "Sunday", time: "08:00 – 22:00" },
+  ],
+  socials: [
+    { label: "Instagram", href: "https://instagram.com", handle: "@jamaafastfood" },
+    { label: "Facebook", href: "https://facebook.com", handle: "/jamaafastfood" },
+    { label: "TikTok", href: "https://tiktok.com", handle: "@jamaafastfood" },
+    { label: "X", href: "https://x.com", handle: "@jamaafastfood" },
+  ],
+  currencyNote: "All prices in Tanzanian Shillings (TZS) and inclusive of VAT.",
+  tin: "TIN 123-456-789",
+  vat: "VAT No. 40-123456-A",
+} as const;
