@@ -20,7 +20,7 @@ function resolveSecret(): string {
 export const config = {
   env: process.env.NODE_ENV ?? "development",
   isProd: process.env.NODE_ENV === "production",
-  port: Number(process.env.PORT ?? 4000),
+  port: Number(process.env.PORT ?? 4100),
   dataDir: DATA_DIR,
   dbFile: path.join(DATA_DIR, "jamaa.db"),
   uploadsDir: path.join(DATA_DIR, "uploads"),

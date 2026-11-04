@@ -14,9 +14,9 @@ export default defineConfig({
   server: {
     port: 5174,
     proxy: {
-      "/api": { target: "http://localhost:4000", changeOrigin: true },
-      "/socket.io": { target: "http://localhost:4000", ws: true },
-      "/images": { target: "http://localhost:4000", changeOrigin: true },
+      "/api": { target: "http://localhost:4100", changeOrigin: true },
+      "/socket.io": { target: "http://localhost:4100", ws: true },
+      "/images": { target: "http://localhost:4100", changeOrigin: true },
     },
   },
   build: {
