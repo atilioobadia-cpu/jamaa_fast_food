@@ -37,6 +37,7 @@ export function OrderDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [points, setPoints] = useState<Array<{ lat: number; lng: number }>>([]);
   const printFrame = useRef<HTMLIFrameElement | null>(null);
+  const [paperSize, setPaperSize] = useState<58 | 80>(80);
   const isNew = params.get("new") === "1";
 
   const load = useCallback(async () => {
@@ -93,7 +94,7 @@ export function OrderDetailPage() {
   const printReceipt = () => {
     const frame = printFrame.current;
     if (!frame) return;
-    frame.src = `/api/orders/${encodeURIComponent(reference)}/receipt.pdf`;
+    frame.src = `/api/orders/${encodeURIComponent(reference)}/receipt.pdf?width=${paperSize}`;
     frame.onload = () => {
       try {
         frame.contentWindow?.focus();
@@ -126,7 +127,7 @@ export function OrderDetailPage() {
     );
   }
 
-  const receiptUrl = `/api/orders/${encodeURIComponent(order.reference)}/receipt.pdf`;
+  const receiptUrl = `/api/orders/${encodeURIComponent(order.reference)}/receipt.pdf?width=${paperSize}`;
   const TypeIcon = order.orderType === "delivery" ? Bike : order.orderType === "takeaway" ? Store : UtensilsCrossed;
 
   return (
@@ -242,10 +243,27 @@ export function OrderDetailPage() {
               </div>
             </div>
             <div className="grid gap-2 p-4">
+              <div className="flex items-center justify-between gap-2 rounded-2xl bg-ink-50 px-3 py-2 text-xs">
+                <span className="font-semibold text-ink-600">Paper size</span>
+                <div className="inline-flex rounded-full border border-ink-200 bg-white p-0.5">
+                  {([80, 58] as const).map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => setPaperSize(size)}
+                      className={`rounded-full px-3 py-1 text-[11px] font-semibold transition ${
+                        paperSize === size ? "bg-ink-900 text-white" : "text-ink-500 hover:text-ink-800"
+                      }`}
+                    >
+                      {size}mm
+                    </button>
+                  ))}
+                </div>
+              </div>
               <a href={receiptUrl} target="_blank" rel="noreferrer" className="btn-primary">
                 <ExternalLink className="h-4 w-4" /> View receipt
               </a>
-              <a href={`${receiptUrl}?download=1`} download className="btn-ghost">
+              <a href={`${receiptUrl}&download=1`} download className="btn-ghost">
                 <Download className="h-4 w-4" /> Download PDF
               </a>
               <button type="button" onClick={printReceipt} className="btn-ghost">

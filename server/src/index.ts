@@ -55,7 +55,7 @@ app.use("/api", (_req, res) => {
 // In production the built SPA is served by this server.
 if (fs.existsSync(config.clientDist)) {
   app.use(express.static(config.clientDist, { index: false, maxAge: "1h" }));
-  app.get("*", (req, res, next) => {
+  app.get(/.*/, (req, res, next) => {
     if (req.path.startsWith("/api") || req.path.startsWith("/socket.io")) {
       next();
       return;

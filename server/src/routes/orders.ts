@@ -31,7 +31,8 @@ ordersRouter.get(
   requireAuth,
   asyncHandler(async (req, res) => {
     const order = loadAuthorisedOrder(param(req, "reference"), req.user!);
-    const pdf = await buildReceiptPdf(order);
+    const width = req.query.width === "58" ? 58 : 80;
+    const pdf = await buildReceiptPdf(order, width as 58 | 80);
     const disposition = req.query.download === "1" ? "attachment" : "inline";
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Content-Disposition", `${disposition}; filename="${receiptFileName(order)}"`);
@@ -53,8 +54,8 @@ ordersRouter.get(
       order,
       restaurant: RESTAURANT.coords,
       destination:
-        order.delivery?.lat !== null && order.delivery?.lng !== null
-          ? { lat: order.delivery!.lat, lng: order.delivery!.lng }
+        order.delivery && order.delivery.lat !== null && order.delivery.lng !== null
+          ? { lat: order.delivery.lat, lng: order.delivery.lng }
           : null,
       points,
       demoMode: config.demoMode,
